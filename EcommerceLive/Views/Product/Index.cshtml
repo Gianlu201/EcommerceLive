@@ -1,0 +1,25 @@
+﻿@model ProductsViewModel
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h3>Products</h3>
+
+<div>
+    <a class="btn btn-primary" asp-controller="Product" asp-action="Add">Add product</a>
+</div>
+
+@if (Model.Products != null && Model.Products.Count > 0)
+{
+    foreach(var product in Model.Products)
+    {
+        <div class="row">
+            <div class="col-4">@product.Id</div>
+            <div class="col-2">@product.Name</div>
+            <div class ="col-2">@product.Category</div>
+            <div class="col-2">@product.Description</div>
+            <div class="col-2">€@product.Price</div>
+        </div>
+    }
+}
