@@ -12,14 +12,26 @@
 
 @if (Model.Products != null && Model.Products.Count > 0)
 {
+    <div class="row">
+        <div class="col-4 text-center">Id</div>
+        <div class="col-1 text-center">Name</div>
+        <div class="col-2 text-center">Category</div>
+        <div class="col-2 text-center">Description</div>
+        <div class="col-2 text-center">Price</div>
+        <div class="col-1 text-center">Azioni</div>
+    </div>
+
     foreach(var product in Model.Products)
     {
-        <div class="row">
+        <div class="row my-1">
             <div class="col-4">@product.Id</div>
-            <div class="col-2">@product.Name</div>
+            <div class="col-1">@product.Name</div>
             <div class ="col-2">@product.Category</div>
             <div class="col-2">@product.Description</div>
             <div class="col-2">€@product.Price</div>
+            <div class="col-1">
+                <a class="btn btn-warning" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
+            </div>
         </div>
     }
 }
