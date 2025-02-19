@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceLive.Controllers
 {
+    // per certificare che le informazioni provengono dal sistema
+    // per evitare furto di dati all'invio del post tramite azioni malevoli
+    [AutoValidateAntiforgeryToken]
     public class ProductController : Controller
     {
         private static List<Product> products = new List<Product>()
@@ -107,6 +110,28 @@ namespace EcommerceLive.Controllers
             existingProduct.Description = editProduct.Description;
             existingProduct.Category = editProduct.Category;
             existingProduct.Price = editProduct.Price;
+
+            return RedirectToAction("Index");
+        }
+
+        [Route("product/delete/{id:guid}")]
+        public IActionResult Delete(Guid id)
+        {
+            // cerco l'oggetto tramite id nella lista statica dei prodotti
+            var existingProduct = products.FirstOrDefault(p => p.Id == id);
+
+            if (existingProduct == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            // il metodo Remove() delle liste restituisce un booleano che indica l'esito dell'operazione
+            var isRemovedSuccessful = products.Remove(existingProduct);
+
+            if (!isRemovedSuccessful)
+            {
+                return RedirectToAction("Index");
+            }
 
             return RedirectToAction("Index");
         }
